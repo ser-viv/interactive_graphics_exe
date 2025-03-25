@@ -3,8 +3,7 @@
 // The given rotation value is in degrees.
 function GetTransform( positionX, positionY, rotation, scale )
 {
-	const trans = [ Math.cos(rotation), -Math.sin(rotation), positionX, Math.cos(rotation), Math.sin(rotation), positionY, 0, 0, scale ]
-	 
+	var trans = [ scale*Math.cos(rotation* Math.PI / 180), scale*Math.sin(rotation* Math.PI / 180),0, -scale*Math.sin(rotation* Math.PI / 180), scale*Math.cos(rotation* Math.PI / 180),0,positionX, positionY, 1 ];
 	return trans;
 }
 
@@ -13,11 +12,18 @@ function GetTransform( positionX, positionY, rotation, scale )
 // The returned transformation first applies trans1 and then trans2.
 function ApplyTransform( trans1, trans2 )
 {
-	const trans = []
-	const transp = [trans2[0],trans2[3],trans2[6],trans2[1],trans2[4],trans2[7],trans2[2],trans2[5],trans2[8]]
-	for(let i = 0; i < 9; i++){
-		trans[i] = trans1[i] * transp[i]
-	}
-	
-	return trans;
+	const R = [];  
+
+
+for (let i = 0; i < 3; i++) {  
+    for (let j = 0; j < 3; j++) { 
+        let sum = 0;
+        for (let m = 0; m < 3; m++) {  
+            sum += trans1[i + m * 3] * trans2[m + j * 3];  
+        }
+        R[j * 3 + i] = sum;
+    }
+}
+
+    return R;
 }
