@@ -19,7 +19,7 @@ for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) { 
         let sum = 0;
         for (let m = 0; m < 3; m++) {  
-            sum += trans1[i + m * 3] * trans2[m + j * 3];  
+            sum += trans2[i + m * 3] * trans1[m + j * 3];  
         }
         R[j * 3 + i] = sum;
     }
